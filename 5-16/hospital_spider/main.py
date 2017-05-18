@@ -1,11 +1,12 @@
 #coding=utf-8
-import lxml
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
 
-# 读取html文件，加载为BeautifulSoup对象
 def load(html):
+    """
+    读取html文件，加载为BeautifulSoup对象
+    """
     #f = open(filename, 'r+')
     soup = BeautifulSoup(html, "lxml")
     return soup
@@ -114,9 +115,11 @@ def run():
 
     soup = load(content)
     
+    print "获取三甲医院名单"
     jia_hos = fetch_3jia(soup)
     save("3jia_hospital.txt", jia_hos)
 
+    print "获取全部医院名单"
     all_hos = fetch_all(soup)
     save("all_hospital.txt", all_hos)
 
