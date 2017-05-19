@@ -1,7 +1,9 @@
 #coding=utf-8
 import urllib
 import urllib2
+
 from bs4 import BeautifulSoup
+
 
 def load(html):
     """
