@@ -40,9 +40,10 @@ def run():
         request = urllib2.Request(url[column])
         response = urllib2.urlopen(url[column])
         content = response.read()
-        
+
         soup = getsoup(content)
         print soup
+
         break
 
 if __name__ =='__main__':
