@@ -116,9 +116,8 @@ def run():
     content = response.read()
 
     soup = load(content)
-    
     print "获取三甲医院名单"
-    jia_hos = fetch_3jia(soup)
+    jia_hos = fetch_3jia(soup)·
     save("3jia_hospital.txt", jia_hos)
 
     print "获取全部医院名单"

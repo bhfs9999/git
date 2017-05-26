@@ -18,7 +18,7 @@
     * 汽车：http://news.163.com/special/0001386F/rank_auto.html
     * 游戏：http://news.163.com/special/0001386F/game_rank.html
     * 旅游：http://news.163.com/special/0001386F/rank_travel.html
-    * 体育：http://news.163.com/special/0001386F/rank_edu.html
+    * 教育：http://news.163.com/special/0001386F/rank_edu.html
     
 
 
