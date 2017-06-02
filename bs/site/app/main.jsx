@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var AppComponent = require('./components/Comment.jsx');
+var AppHeader = require('./components/Header.jsx');
 
 /*
 var express = require('express');
@@ -11,4 +11,4 @@ var app = express();*/
 
 
 
-ReactDOM.render(<AppComponent />, document.getElementById('content'));
+ReactDOM.render(<AppHeader />, document.getElementById('header'));
