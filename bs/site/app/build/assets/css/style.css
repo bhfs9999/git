@@ -30,27 +30,30 @@ body {
     font-weight:800;
 }
 
-.blog-main {
-    padding:10px 5px;
+.news-main {
+    padding:10px 5px 5px 5px;
     border-bottom:2px solid #065883;
-    margin-bottom:30px;
+    margin-bottom:15px;
 }
-.heading-blog {
-    font-size:30px;
+.heading-news {
+    font-size:22px;
     color:#065883;
     font-weight:800;
-    padding:30px 5px;
+    padding:10px 5px 2px 5px;
     line-height:40px;
 }
-.blog-info {
-    padding:20px 5px; 
-    font-size:20px;
+.news-heading:hover {
+    text-decoration:none;
+}
+.news-info {
+    padding:2px 5px 10px 5px; 
+    font-size:15px;
     font-weight:normal;
 }
-.blog-txt {
-    padding:20px 5px; 
+.news-txt {
+    padding:5px 5px; 
     font-family:Andalus ;
-    font-size:20px;    
+    font-size:15px;    
     font-weight:normal;
 }
 .set-foot {

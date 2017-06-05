@@ -8,13 +8,13 @@ var NewsHeading = React.createClass({
     },
     render: function(){
         return (
-            <div className="heading-blog">
+            <div className="heading-news">
                 {/*<a href="singlepost.html">*/}
-                <a id={this.props.id} onClick={this.props.updateProp}>
-                {this.props.heading}
+                <a id={this.props.id} onClick={this.props.updateProp} className="news-heading">
+                    {this.props.heading}
                 </a>
             </div>
-        );
+        );  
     }
 });
 
@@ -43,7 +43,7 @@ var NewsInfo = React.createClass({
     },
     render: function(){
         return (
-            <div className="blog-info">
+            <div className="news-info">
                 <span className="label label-primary">{this.props.date}</span>
                 <span className="label label-success">{this.props.cate}</span>
                 <span className="label label-danger">{this.props.author}</span>
@@ -64,7 +64,7 @@ var NewsTxt = React.createClass({
             <div>
             {
                 this.props.txt.map(function (text) {
-                    return <div className="blog-txt" dangerouslySetInnerHTML={{__html: text}}></div>
+                    return <div className="news-txt" dangerouslySetInnerHTML={{__html: text}}></div>
                 })
             }
             </div>
@@ -75,9 +75,9 @@ var NewsTxt = React.createClass({
 var News = React.createClass({
     render: function(){
         return (
-            <div className="blog-main">
+            <div className="news-main">
                 <NewsHeading heading={this.props.heading} updateProp={this.props.updateProp} id={this.props.id}/>
-                <NewsImg img={this.props.img} />
+                {/*<NewsImg img={this.props.img} />*/}
                 <NewsInfo date={this.props.date} cate={this.props.cate} author={this.props.author} />
                 <NewsTxt txt={this.props.txt} />
             </div>
