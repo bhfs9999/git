@@ -3,16 +3,16 @@ var React = require('react');
 var Header = React.createClass({
     render: function(){
         return (
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <img src="assets/img/person.jpg" class="img-circle img-responsive" />
+        <div className="container">
+            <div className="row">
+                <div className="col-md-2">
+                    <img src="assets/img/person.jpg" className="img-circle img-responsive" />
                 </div>
-                <div class="col-md-5 text-center">
+                <div className="col-md-5 text-center">
                     <h1><strong>Jhon Alexan </strong></h1>
                     <h4>Blogger & Designer</h4>
                 </div>
-                <div class="col-md-5">
+                <div className="col-md-5">
                     <h3>WHO M I :</h3>
 
                     I am a 26 years old guy who loves bloggging and designing .

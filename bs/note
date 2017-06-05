@@ -1,0 +1,7 @@
+点击新闻下边的类别，跳转到对应类别新闻
+分页改为动态加载
+搜索栏
+右侧分类栏点击
+父节点props改为state http://www.runoob.com/react/react-props.html
+使用json文件存储新闻数据
+遇到react无法解析html内容的问题，使用dangerouslySetInnerHTML解决，http://doc.okbase.net/xianyulaodi/archive/195329.html
