@@ -5,3 +5,15 @@
 父节点props改为state http://www.runoob.com/react/react-props.html
 使用json文件存储新闻数据
 遇到react无法解析html内容的问题，使用dangerouslySetInnerHTML解决，http://doc.okbase.net/xianyulaodi/archive/195329.html
+JavaScript Array map() 方法: array.map(function(currentValue,index,arr), thisValue), 使用时会出现函数内部调用不了外部函数的情况，此时传入this即可，
+newsData.news.map(function (anews) {
+    return <News 
+            heading={anews.heading}
+            updateProp={this.handleClick}
+            img={anews.img}
+            date={anews.date}
+            cate={anews.cate}
+            author={anews.author}
+            txt= {anews.txt}
+            />
+}, this)

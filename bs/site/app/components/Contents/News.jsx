@@ -10,7 +10,7 @@ var NewsHeading = React.createClass({
         return (
             <div className="heading-blog">
                 {/*<a href="singlepost.html">*/}
-                <a onClick={this.props.updateProp}>
+                <a id={this.props.id} onClick={this.props.updateProp}>
                 {this.props.heading}
                 </a>
             </div>
@@ -76,7 +76,7 @@ var News = React.createClass({
     render: function(){
         return (
             <div className="blog-main">
-                <NewsHeading heading={this.props.heading} updateProp={this.props.updateProp} />
+                <NewsHeading heading={this.props.heading} updateProp={this.props.updateProp} id={this.props.id}/>
                 <NewsImg img={this.props.img} />
                 <NewsInfo date={this.props.date} cate={this.props.cate} author={this.props.author} />
                 <NewsTxt txt={this.props.txt} />
