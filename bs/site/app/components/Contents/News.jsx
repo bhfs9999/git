@@ -11,7 +11,9 @@ var NewsHeading = React.createClass({
             <div className="heading-news">
                 {/*<a href="singlepost.html">*/}
                 <a id={this.props.id} onClick={this.props.updateProp} className="news-heading">
-                    {this.props.heading}
+                    <Link to="/detail">
+                        {this.props.heading}
+                    </Link>
                 </a>
             </div>
         );  

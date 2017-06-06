@@ -1,5 +1,7 @@
+import {Router, Route, Link} from 'react-router'
 var React = require('react');
 var News = require('./Contents/News.jsx');
+var NewsDetail = require('./Contents/NewsDetail.jsx');
 var Paging = require('./Contents/Paging.jsx');
 var Navigator = require('./Contents/Navigator.jsx');
 var Search = require('./Contents/Search.jsx');
@@ -39,58 +41,11 @@ var Content = React.createClass({
         <div className="container">
             <div className="row">
                 <div className="col-md-1">
-                    {this.state.showDetail ? <Goback updateProp={this.handleGobackClick} />  : null}
+                    <Goback updateProp={this.handleGobackClick} />
                 </div>
                 <div className="col-md-8">
-                {
-                    newsData.news.map(function (anews, index) {
-                        var listedNews;
-                        if(!this.state.showDetail) {
-                            listedNews = (
-                                <News 
-                                heading={anews.heading}
-                                updateProp={this.handleHeadingClick}
-                                img={anews.img}
-                                date={anews.date}
-                                cate={anews.cate}
-                                author={anews.author}
-                                txt={anews.txt}
-                                id={"news " + index}
-                                />
-                            )
-                        }
-                        else if(this.state.showDetail&&index==this.state.detailIndex) {
-                            listedNews = (
-                                <News 
-                                heading={anews.heading}
-                                updateProp={this.handleHeadingClick}
-                                img={anews.img}
-                                date={anews.date}
-                                cate={anews.cate}
-                                author={anews.author}
-                                txt={anews.detailIndex}
-                                id={"news " + index}
-                                />
-                            )
-                        }
-                        else {
-                            listedNews=null
-                        }
-                        return listedNews
-                    }, this)
-                }
-                    {/*<News 
-                    heading="The security is main concern while developing applications"
-                    updateProp={this.handleClick}
-                    img="assets/img/1.jpg"
-                    date="Posted on 26th November 2014"
-                    cate="In Technology"
-                    author="By Jhon"
-                    txt= {this.state.txt}
-                    />*/}
-                    {/*<News />
-                    <News />*/}
-                {this.state.showDetail ? null  : <Paging />}
+                    {this.props.children}
+                <Paging />
                 
                 </div>
                 <div className="col-md-3">
