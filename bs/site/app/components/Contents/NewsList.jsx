@@ -1,59 +1,7 @@
-var React = require('react');
-import {Link} from 'react-router'
-
-var NewsHeading = React.createClass({
-    getDefaultProps: function() {
-        return {
-            heading: "The security is main concern while developing applications"
-        };
-    },
-    render: function(){
-        return (
-            <div className="heading-news">
-                {/*<a href="singlepost.html">*/}
-                <a id={this.props.id} className="news-heading">
-                    <Link to="/detail">
-                        {this.props.heading}
-                    </Link>
-                </a>
-            </div>
-        );  
-    }
-});
-
-var NewsImg = React.createClass({
-    getDefaultProps: function() {
-        return {
-            img: "assets/img/1.jpg"
-        };
-    },
-    render: function(){
-        return (
-            <a href="singlepost.html">
-                <img src={this.props.img} className="img-responsive img-rounded" />
-            </a>
-        );
-    }
-});
-
-var NewsInfo = React.createClass({
-    getDefaultProps: function() {
-        return {
-            date: "Posted on 26th November 2014",
-            cate: "In Technology",
-            author: "By Jhon"
-        };
-    },
-    render: function(){
-        return (
-            <div className="news-info">
-                <span className="label label-primary">{this.props.date}</span>
-                <span className="label label-success">{this.props.cate}</span>
-                <span className="label label-danger">{this.props.author}</span>
-            </div>
-        );
-    }
-});
+import React from 'react'
+import NewsHeading from './News/NewsHeading.jsx'
+import NewsImg from './News/NewsImg.jsx'
+import NewsInfo from './News/NewsInfo.jsx'
 
 var NewsTxt = React.createClass({
     getDefaultProps: function() {
@@ -79,7 +27,7 @@ var News = React.createClass({
     render: function(){
         return (
             <div className="news-main">
-                <NewsHeading heading={this.props.heading} updateProp={this.props.updateProp} id={this.props.id}/>
+                <NewsHeading heading={this.props.heading} id={this.props.id}/>
                 {/*<NewsImg img={this.props.img} />*/}
                 <NewsInfo date={this.props.date} cate={this.props.cate} author={this.props.author} />
                 <NewsTxt txt={this.props.txt} />
@@ -88,4 +36,26 @@ var News = React.createClass({
     }
 });
 
-module.exports = News;
+var NewsList = React.createClass({
+    render: function(){
+        return (
+            <div>
+            {
+                this.props.newsdata.news.map(function (anews, index) {
+                    return <News 
+                            heading={anews.heading}
+                            img={anews.img}
+                            date={anews.date}
+                            cate={anews.cate}
+                            author={anews.author}
+                            txt={anews.txt}
+                            id={"news " + index}
+                            />
+                }, this)
+            }
+            </div>
+        );
+    }
+});
+
+module.exports = NewsList;

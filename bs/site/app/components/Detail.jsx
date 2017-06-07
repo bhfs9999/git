@@ -15,7 +15,7 @@ var Detail = React.createClass({
                     <Goback />
                 </div>
                 <div className="col-md-8">
-                    <NewsDetail />
+                    <NewsDetail newsdata={newsData.news[this.props.params.id]} />
                 </div>
                 <div className="col-md-3">
                     <Navigator />

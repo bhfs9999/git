@@ -1,6 +1,6 @@
 import {Router, Route, Link} from 'react-router'
 var React = require('react');
-var News = require('./Contents/News.jsx');
+var NewsList = require('./Contents/NewsList.jsx');
 var Paging = require('./Contents/Paging.jsx');
 var Navigator = require('./Contents/Navigator.jsx');
 var Search = require('./Contents/Search.jsx');
@@ -14,7 +14,7 @@ var List = React.createClass({
                 <div className="col-md-1">
                 </div>
                 <div className="col-md-8">
-                    <News />
+                    <NewsList newsdata={newsData} />
                     <Paging />
                 </div>
                 <div className="col-md-3">
