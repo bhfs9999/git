@@ -2,7 +2,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var AppHeader = require('./Header.jsx');
 var AppSponser = require('./Sponser.jsx');
-var AppContent = require('./Content.jsx');
 var AppFooter = require('./Footer.jsx');
 
 var App = React.createClass({

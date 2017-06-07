@@ -1,8 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 import App from './components/App.jsx'
-import Header from './components/Header.jsx'
-import AppContent from './components/Content.jsx'
+import List from './components/List.jsx'
+import Detail from './components/Detail.jsx'
+
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 /*
@@ -15,7 +16,8 @@ var app = express();*/
 render((
     <Router history={browserHistory}>
         <Route path="/" component={App}>
-            <Route path="lala" component={AppContent}/>
+            <IndexRoute component={List} />
+            <Route path="/detail" component={Detail} />
         </Route>
     </Router>
 ), document.getElementById('content'))

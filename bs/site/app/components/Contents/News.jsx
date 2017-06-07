@@ -1,4 +1,5 @@
 var React = require('react');
+import {Link} from 'react-router'
 
 var NewsHeading = React.createClass({
     getDefaultProps: function() {
@@ -10,7 +11,7 @@ var NewsHeading = React.createClass({
         return (
             <div className="heading-news">
                 {/*<a href="singlepost.html">*/}
-                <a id={this.props.id} onClick={this.props.updateProp} className="news-heading">
+                <a id={this.props.id} className="news-heading">
                     <Link to="/detail">
                         {this.props.heading}
                     </Link>

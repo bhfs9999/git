@@ -10,7 +10,7 @@ var NewsHeading = React.createClass({
         return (
             <div className="heading-news">
                 {/*<a href="singlepost.html">*/}
-                <a id={this.props.id} onClick={this.props.updateProp} className="news-heading">
+                <a id={this.props.id} className="news-heading">
                     {this.props.heading}
                 </a>
             </div>

@@ -1,4 +1,5 @@
 var React = require('react');
+import {Link} from 'react-router'
 
 var Goback = React.createClass({
     render: function(){
@@ -10,7 +11,7 @@ var Goback = React.createClass({
             <br />
                 <nav>
                     <ul className="pagination">
-                        <li><a onClick={this.props.updateProp}><span aria-hidden="true" style={myStyle}>&lt;&lt;</span><span className="sr-only">Previous</span></a></li>
+                        <li><Link to="/"><span aria-hidden="true" style={myStyle}>&lt;&lt;</span></Link></li>
                     </ul>
                 </nav>
             </div>
