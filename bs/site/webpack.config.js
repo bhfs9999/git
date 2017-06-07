@@ -27,6 +27,12 @@ module.exports = {
         historyApiFallback: true,
         hot: true,
         inline: true,
+        proxy: {
+            '/newsdata.json': {
+                target: 'http://localhost:4001/list_user',
+                secure: false,
+            }
+        }
     },
     //其它解决方案配置
     resolve: {
