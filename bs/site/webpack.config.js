@@ -28,9 +28,10 @@ module.exports = {
         hot: true,
         inline: true,
         proxy: {
-            '/newsdata.json': {
-                target: 'http://localhost:4001/list_user',
+            '/api/*': {
+                target: 'http://localhost:4001',
                 secure: false,
+                changeOrigin: true,
             }
         }
     },

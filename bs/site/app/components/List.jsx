@@ -15,7 +15,14 @@ var List = React.createClass({
         }
     },
     componentDidMount() {
-        fetch('/newsdata.json')
+        var url = '/api/getlist?' + new Date()
+        fetch(url,{
+                method: 'GET', 
+                redirect: 'follow',
+                headers: new Headers({
+                    'Content-Type': 'text/plain'
+                })
+            })
             .then((response) => {
                 console.log(response);
                 return response.json();
