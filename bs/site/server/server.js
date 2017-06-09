@@ -14,24 +14,33 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-function fetchDataFromDb(callback) {
-
-    var sql = "select * from news where cate='游戏'"
-    
+function fetchDataFromDb(callback, sql) {
     var response;
     connection.query(sql, function (err, result) {
         if(err) {
-            console.log('[SELECT ERROR] - ',err.message);
+            console.log('[SELECT ERROR] - ', err.message);
             return;
         }
+        callback(null, result);
+    });
+}
+
+function fetchNews(callback, sql) {
+    fetchDataFromDb(function(err, result) {
+        if(err) throw err;
+
         var newslist = new Array();
         for(var i=0; i<result.length; i++) {
             var dd = result[i].description.replace(/<\/?.+?>/g,"");
             var overview = dd.replace(/ /g,"").substring(0,100) + "......"; //截取部分文字作为概览
+            var year = result[i].date.getFullYear();
+            var month = result[i].date.getMonth()+1;
+            var date = result[i].date.getDate();
+            var date = year + "-" + month + "-" + date
             anews = {"newsid": result[i].idnews, 
                      "heading": result[i].title,
                      "link": result[i].link,
-                     "date": result[i].date,
+                     "date": date,
                      "author": result[i].author,
                      "txt": [overview],
                      "detail": [result[i].description],
@@ -42,16 +51,60 @@ function fetchDataFromDb(callback) {
         response = {"news": newslist};
         console.log("Fetched " + result.length + " news");
         callback(null, JSON.stringify(response));
-    });
+    }, sql)
+}
+
+function fetchCount(callback, sql) {
+    fetchDataFromDb(function(err, result) {
+        if(err) throw err;
+
+        var countlist = new Object();
+        for(var i=0; i<result.length; i++) {
+            countlist[result[i].cate] = result[i].counts;
+        }
+        console.log(countlist);
+        callback(null, JSON.stringify(countlist));
+    }, sql)
 }
 
 app.get('/api/getlist', function (req, res) {
-   console.log("主页ajax请求");
-   res.writeHead(200, {'Content-Type': 'application/json'});
-   fetchDataFromDb(function(err, result){
-       if (err) throw err;
-       res.end(JSON.stringify(result));
-   });
+    var cate = req.query.cate;
+    var sql = "select * from news where cate='" + cate + "'";
+
+    console.log("---------------主页ajax请求: getlist " + cate);
+    res.writeHead(200, {'Content-Type': 'application/json'});
+
+    fetchNews(function(err, result) {
+        if (err) throw err;
+        res.end(JSON.stringify(result));
+    }, sql);
+})
+
+app.get('/api/getdetail', function (req, res) {
+    var newsid = req.query.newsid;
+    var sql = "select * from news where idnews='" + newsid + "'";
+
+    console.log("---------------主页ajax请求: getdetail " + newsid);
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+
+    fetchNews(function(err, result) {
+        if (err) throw err;
+        res.end(JSON.stringify(result));
+    }, sql);
+})
+
+app.get('/api/getcount', function (req, res) {
+    var sql = "SELECT cate, count(*) as counts FROM news_site.news group by cate;";
+
+    console.log("---------------主页ajax请求: getcount ");
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+
+    fetchCount(function(err, result) {
+        if (err) throw err;
+        res.end(JSON.stringify(result));
+    }, sql);
 })
 
 app.get('/', function (req, res) {

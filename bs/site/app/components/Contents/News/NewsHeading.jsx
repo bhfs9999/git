@@ -9,11 +9,11 @@ var NewsHeading = React.createClass({
     },
     render: function(){
         var heading;
-        if (this.props.id) {
+        if (this.props.newsid) {
             heading = (
                 <div className="heading-news">
-                    <a id={this.props.id} className="news-heading">
-                        <Link to={"/detail"+this.props.id.substr(5)}>
+                    <a id={this.props.newsid} className="news-heading">
+                        <Link to={"/detail"+this.props.newsid}>
                             {this.props.heading}
                         </Link>
                     </a>

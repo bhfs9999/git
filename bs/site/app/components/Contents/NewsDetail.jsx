@@ -31,7 +31,6 @@ var NewsDetail = React.createClass({
         return (
             <div className="news-main">
                 <NewsHeading heading={this.props.newsdata.heading} />
-                <NewsImg img={this.props.newsdata.img} />
                 <NewsInfo date={this.props.newsdata.date} cate={this.props.newsdata.cate} author={this.props.newsdata.author} />
                 <NewsTxt txt={this.props.newsdata.detail} />
             </div>

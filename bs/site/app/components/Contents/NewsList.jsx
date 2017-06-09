@@ -27,7 +27,7 @@ var News = React.createClass({
     render: function(){
         return (
             <div className="news-main">
-                <NewsHeading heading={this.props.heading} id={this.props.id}/>
+                <NewsHeading heading={this.props.heading} newsid={this.props.newsid}/>
                 {/*<NewsImg img={this.props.img} />*/}
                 <NewsInfo date={this.props.date} cate={this.props.cate} author={this.props.author} />
                 <NewsTxt txt={this.props.txt} />
@@ -49,7 +49,7 @@ var NewsList = React.createClass({
                             cate={anews.cate}
                             author={anews.author}
                             txt={anews.txt}
-                            id={"news " + index}
+                            newsid={anews.newsid}
                             />
                 }, this)
             }

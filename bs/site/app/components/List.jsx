@@ -15,7 +15,7 @@ var List = React.createClass({
         }
     },
     componentDidMount() {
-        var url = '/api/getlist?' + new Date()
+        var url = '/api/getlist?cate=游戏&' + new Date()
         fetch(url,{
                 method: 'GET', 
                 redirect: 'follow',

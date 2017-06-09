@@ -17,7 +17,7 @@ render((
     <Router history={browserHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={List} />
-            <Route path="detail(:id)" component={Detail} />
+            <Route path="detail(:newsid)" component={Detail} />
         </Route>
     </Router>
 ), document.getElementById('content'))
