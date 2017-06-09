@@ -9,13 +9,19 @@ var Search = require('./Contents/Search.jsx');
 let DefaultnewsData = require('./news.json');
 
 var List = React.createClass({
-    getInitialState: function() {
+    getDefaultProps: function() {
         return {
-            newsData: DefaultnewsData
+            catemap: {"inland": "国内", "global": "国际", "sport": "体育", "finance": "经济", "game": "游戏"}
         }
     },
-    componentDidMount() {
-        var url = '/api/getlist?cate=游戏&' + new Date()
+    getInitialState: function() {
+        return {
+            newsData: DefaultnewsData,
+            cate: this.props.params.cate || "inland"
+        }
+    },
+    fetchNews: function() {
+        var url = '/api/getlist?cate=' + this.props.catemap[this.state.cate] + '&' + new Date()
         fetch(url,{
                 method: 'GET', 
                 redirect: 'follow',
@@ -36,6 +42,18 @@ var List = React.createClass({
             .catch((err) => {
                 console.log(err);
             });
+    },
+    componentDidMount() {
+        this.fetchNews();
+    },
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            cate: nextProps.params.cate,
+        }, function() {
+            this.fetchNews();
+           }
+        );
+
     },
     render: function(){
         return (

@@ -13,7 +13,7 @@ var Detail = React.createClass({
         }
     },
     componentDidMount() {
-        var url = '/api/getdetail?newsid=' + this.props.params.newsid + "&" + new Date()
+        var url = '/api/getdetail?newsid=' + this.props.params.newsid + "&" + new Date();
         scrollTo(0, 220);
         fetch(url,{
                 method: 'GET', 

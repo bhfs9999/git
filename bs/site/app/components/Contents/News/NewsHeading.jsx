@@ -4,16 +4,20 @@ import {Link} from 'react-router'
 var NewsHeading = React.createClass({
     getDefaultProps: function() {
         return {
-            heading: "The security is main concern while developing applications"
+            heading: "The security is main concern while developing applications",
+            catemap: {"国内": "inland", "国际": "global", "体育": "sport", "经济": "finance", "游戏": "game"}
         };
+    },
+    componentDidMount: function() {
+        console.log(location.pathname)
     },
     render: function(){
         var heading;
         if (this.props.newsid) {
             heading = (
                 <div className="heading-news">
-                    <a id={this.props.newsid} className="news-heading">
-                        <Link to={"/detail"+this.props.newsid}>
+                    <a id={location.pathname} className="news-heading">
+                        <Link to={this.props.catemap[this.props.cate] + "/" + this.props.newsid}>
                             {this.props.heading}
                         </Link>
                     </a>
@@ -23,7 +27,7 @@ var NewsHeading = React.createClass({
         else {
             heading = (
                 <div className="heading-news">
-                    <a className="news-heading">
+                    <a className="news-heading" >
                         {this.props.heading}
                     </a>
                 </div>

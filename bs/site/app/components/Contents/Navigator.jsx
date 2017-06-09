@@ -1,9 +1,14 @@
 var React = require('react');
+import {Link} from 'react-router'
 
 var Navigator = React.createClass({
     getDefaultProps: function() {
         return {
-            cates: ["国内", "国际", "体育", "经济", "游戏"]
+            cates: [["inland", "国内"], 
+                    ["global", "国际"], 
+                    ["sport", "体育"], 
+                    ["finance", "经济"],
+                    ["game", "游戏"]]
         }
     },
     getInitialState: function() {
@@ -42,10 +47,12 @@ var Navigator = React.createClass({
                 </li>
                 {
                     this.props.cates.map(function(cate) {
-                        return <li className="list-group-item">
-                                   <span className="badge">{this.state.count[cate]}</span>
-                                   {cate} 
-                               </li>
+                        return <Link to={cate[0]}>
+                                   <li className="list-group-item">
+                                        <span className="badge">{this.state.count[cate[1]]}</span>
+                                        {cate[1]}                                     
+                                   </li>
+                               </Link>
                     }, this)
                 }
             </ul>
