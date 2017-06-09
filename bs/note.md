@@ -94,3 +94,6 @@
     var dd=anews.detail[0].replace(/<\/?.+?>/g,"");
     var dds=dd.replace(/ /g,"");//dds为得到后的内容
     ```
+
+12. 提高加载速度 http://javascript.ruanyifeng.com/bom/ajax.html#toc27
+13. 点击新闻标题后，页面返回顶部，使用scrollTo(0, 0)函数
