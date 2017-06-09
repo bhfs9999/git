@@ -3,12 +3,55 @@ var app = express();
 var fs=require('fs');
 var file="./news.json";
 var newsdata=JSON.parse(fs.readFileSync(file));
+var mysql      = require('mysql');
 
+var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : '1234',
+    port     : '3306',
+    database : 'news_site'
+});
+connection.connect();
+
+function fetchDataFromDb(callback) {
+
+    var sql = "select * from news where cate='游戏'"
+    
+    var response;
+    connection.query(sql, function (err, result) {
+        if(err) {
+            console.log('[SELECT ERROR] - ',err.message);
+            return;
+        }
+        var newslist = new Array();
+        for(var i=0; i<result.length; i++) {
+            var dd = result[i].description.replace(/<\/?.+?>/g,"");
+            var overview = dd.replace(/ /g,"").substring(0,100) + "......"; //截取部分文字作为概览
+            anews = {"newsid": result[i].idnews, 
+                     "heading": result[i].title,
+                     "link": result[i].link,
+                     "date": result[i].date,
+                     "author": result[i].author,
+                     "txt": [overview],
+                     "detail": [result[i].description],
+                     "origin": result[i].origin,
+                     "cate": result[i].cate};
+            newslist[i] = anews;
+        }
+        response = {"news": newslist};
+        console.log("Fetched " + result.length + " news");
+        callback(null, JSON.stringify(response));
+    });
+}
 
 app.get('/api/getlist', function (req, res) {
    console.log("主页ajax请求");
    res.writeHead(200, {'Content-Type': 'application/json'});
-   res.end(JSON.stringify(newsdata));
+   fetchDataFromDb(function(err, result){
+       if (err) throw err;
+       res.end(JSON.stringify(result));
+   });
 })
 
 app.get('/', function (req, res) {

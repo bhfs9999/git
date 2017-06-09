@@ -28,11 +28,10 @@ var List = React.createClass({
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
+                console.log(JSON.parse(data).news);
                 this.setState({
-                    newsData: data
+                    newsData: JSON.parse(data)
                 });
-                console.log(this.state.newsData);
             })
             .catch((err) => {
                 console.log(err);

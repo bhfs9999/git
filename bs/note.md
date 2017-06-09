@@ -68,3 +68,29 @@
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(newsdata));
    ```
+
+10. 在一个自定义函数中调用异步函数，为了获取其返回值，需要传入一个回调函数作为参数
+    ```
+    function fetchDataFromDb(callback) {
+
+        var sql = "select * from news where cate='游戏'"
+        
+        var response;
+        connection.query(sql, function (err, result) {
+            callback(null, JSON.stringify(response));
+        });
+    }
+    ```
+    在调用该函数时，传入一个自定义回调函数
+    ```
+    fetchDataFromDb(function(err, result){
+        if (err) throw err;
+        res.end(JSON.stringify(result));
+    });
+    ```
+
+11. 获取html标签中的内容
+    ```
+    var dd=anews.detail[0].replace(/<\/?.+?>/g,"");
+    var dds=dd.replace(/ /g,"");//dds为得到后的内容
+    ```
