@@ -37,7 +37,7 @@ var Detail = React.createClass({
     },    
     render: function(){
         return (
-        <div className="container">
+        <div className="container outer-container">
             <div className="row">
                 <div className="col-md-1">
                     <Goback />

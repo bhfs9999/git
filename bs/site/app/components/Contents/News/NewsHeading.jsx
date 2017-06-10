@@ -8,9 +8,6 @@ var NewsHeading = React.createClass({
             catemap: {"国内": "inland", "国际": "global", "体育": "sport", "经济": "finance", "游戏": "game"}
         };
     },
-    componentDidMount: function() {
-        console.log(location.pathname)
-    },
     render: function(){
         var heading;
         if (this.props.newsid) {

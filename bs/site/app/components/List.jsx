@@ -6,6 +6,7 @@ var NewsList = require('./Contents/NewsList.jsx');
 var Paging = require('./Contents/Paging.jsx');
 var Navigator = require('./Contents/Navigator.jsx');
 var Search = require('./Contents/Search.jsx');
+var Gotop = require('./Contents/Gotop.jsx');
 
 var List = React.createClass({
     getDefaultProps: function() {
@@ -56,11 +57,9 @@ var List = React.createClass({
     },
     render: function(){
         return (
-        <div className="container">
+        <div className="container outer-container">
             <div className="row">
-                <div className="col-md-1">
-                </div>
-                <div className="col-md-8">
+                <div className="col-md-9">
                     <NewsList newsdata={this.state.newsData} />
                 </div>
                 <div className="col-md-3">
@@ -68,6 +67,7 @@ var List = React.createClass({
                     <br />
                     <br />
                     <Search />
+                    <Gotop />
                 </div>
             </div>
         </div>
