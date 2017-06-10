@@ -13,7 +13,7 @@ var Navigator = React.createClass({
     },
     getInitialState: function() {
         return {
-            count: {"国内":0, "国际":0, "体育":0, "经济":0, "游戏":0}
+            count: {"国内": "Loading", "国际": "Loading", "体育": "Loading", "经济": "Loading", "游戏": "Loading"}
         };
     },
     componentDidMount() {

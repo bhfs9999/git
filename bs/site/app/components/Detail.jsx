@@ -4,12 +4,11 @@ var Goback = require('./Contents/Goback.jsx');
 var NewsDetail = require('./Contents/NewsDetail.jsx');
 var Navigator = require('./Contents/Navigator.jsx');
 var Search = require('./Contents/Search.jsx');
-let DefaultnewsData = require('./news.json');
 
 var Detail = React.createClass({
     getInitialState: function() {
         return {
-            newsData: DefaultnewsData
+            newsData: null
         }
     },
     componentDidMount() {
@@ -44,7 +43,7 @@ var Detail = React.createClass({
                     <Goback />
                 </div>
                 <div className="col-md-8">
-                    <NewsDetail newsdata={this.state.newsData.news[0]} />
+                    <NewsDetail newsdata={this.state.newsData ? this.state.newsData.news[0] : null} />
                 </div>
                 <div className="col-md-3">
                     <Navigator />

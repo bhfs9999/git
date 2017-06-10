@@ -6,7 +6,6 @@ var NewsList = require('./Contents/NewsList.jsx');
 var Paging = require('./Contents/Paging.jsx');
 var Navigator = require('./Contents/Navigator.jsx');
 var Search = require('./Contents/Search.jsx');
-let DefaultnewsData = require('./news.json');
 
 var List = React.createClass({
     getDefaultProps: function() {
@@ -16,7 +15,7 @@ var List = React.createClass({
     },
     getInitialState: function() {
         return {
-            newsData: DefaultnewsData,
+            newsData: null,
             cate: this.props.params.cate || "inland"
         }
     },
@@ -63,7 +62,6 @@ var List = React.createClass({
                 </div>
                 <div className="col-md-8">
                     <NewsList newsdata={this.state.newsData} />
-                    <Paging />
                 </div>
                 <div className="col-md-3">
                     <Navigator />

@@ -2,13 +2,6 @@ var React = require('react');
 import {Link} from 'react-router'
 
 var NewsInfo = React.createClass({
-    getDefaultProps: function() {
-        return {
-            date: "Posted on 26th November 2014",
-            cate: "In Technology",
-            author: "By Jhon"
-        };
-    },
     render: function(){
         return (
             <div className="news-info">

@@ -4,12 +4,6 @@ import NewsImg from './News/NewsImg.jsx'
 import NewsInfo from './News/NewsInfo.jsx'
 
 var NewsTxt = React.createClass({
-    getDefaultProps: function() {
-        return {
-            txt: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus non diam feugiat commodo. Sed auctor mauris a tristique imperdiet. Nullam egestas sapien non lectus suscipit, quis tristique odio imperdiet. Nullam elit lacus, tincidunt eget faucibus eget, vestibulum venenatis metus. Praesent efficitur quam aliquam mauris sagittis, vel lacinia risus luctus. Ut vitae bibendum ipsum.",
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec tellus non diam feugiat commodo. Sed auctor mauris a tristique imperdiet. Nullam egestas sapien non lectus suscipit, <i> tincidunt eget faucibus eget, vestibulum venenatis metus. Praesent efficitur quam aliquam mauris sagittis, vel lacinia</i>quis tristique odio imperdiet. Nullam elit lacus, tincidunt<strong>dolor sit amet, consectetur adipiscing elit. Fusce nec tellus non diam</strong> eget faucibus eget, vestibulum venenatis metus. Praesent efficitur quam aliquam mauris sagittis, vel lacinia risus luctus. Ut vitae bibendum ipsum."]
-        };
-    },
     render: function(){
         return (
             <div>
@@ -39,6 +33,7 @@ var News = React.createClass({
 var NewsList = React.createClass({
     render: function(){
         return (
+            this.props.newsdata?
             <div>
             {
                 this.props.newsdata.news.map(function (anews, index) {
@@ -54,6 +49,8 @@ var NewsList = React.createClass({
                 }, this)
             }
             </div>
+            :
+            null
         );
     }
 });
