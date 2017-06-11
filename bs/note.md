@@ -97,3 +97,8 @@
 
 12. 提高加载速度 http://javascript.ruanyifeng.com/bom/ajax.html#toc27
 13. 点击新闻标题后，页面返回顶部，使用scrollTo(0, 0)函数
+14. 实现滚动回到顶部效果:
+    ```
+    $('html,body').animate({scrollTop: '0px'}, 500);
+    ```
+15. 控制组件的覆盖关系，使用z-index属性，99999最大，越大越靠前

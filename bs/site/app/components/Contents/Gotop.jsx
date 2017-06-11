@@ -2,7 +2,7 @@ var React = require('react');
 
 var Gotop = React.createClass({
     handleclick: function() {
-        scroll(0, 0);
+        $('html,body').animate({scrollTop: '0px'}, 500);
     },
     render: function(){
         var myStyle = {

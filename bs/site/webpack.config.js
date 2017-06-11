@@ -19,7 +19,10 @@ module.exports = {
                 //添加两个预先加载的组件，用来处理js或jsx类型的文件
                 presets: ['es2015', 'react']
                 }
-            }
+            },
+            {test: /\.css$/, loader: "style!css?sourceMap!postcss"},
+            {test: /\.less$/, loader: "style!css!less|postcss"},
+            {test: /\.scss$/, loader: "style!css!sass|postcss"},
         ]
     },
     devServer: {
