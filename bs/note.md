@@ -102,3 +102,24 @@
     $('html,body').animate({scrollTop: '0px'}, 500);
     ```
 15. 控制组件的覆盖关系，使用z-index属性，99999最大，越大越靠前
+16. 使用正则表达式对注册输入数据进行验证，例，邮件：
+    ```
+    var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+
+        if(reg.test(event.target.value) || event.target.value=="") {
+    ```
+17. express处理POST请求，需要使用body-parser插件，并在使用时引入。
+    ```
+    var bodyParser = require('body-parser');
+    var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+    app.post('/api/create_account', urlencodedParser, function (req, res) {
+        var email = req.body.email;
+        var username = req.body.username;
+        var password = req.body.passwod;
+
+        console.log("---------------主页Fetch请求: create_account ");
+        console.log(email, username, passwod);
+    })
+    ```
+18. sql查询时，若结果为空，result为一个空数组，需要使用result.length==0判断

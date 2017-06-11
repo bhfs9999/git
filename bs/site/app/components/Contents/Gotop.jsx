@@ -6,7 +6,8 @@ var Gotop = React.createClass({
     },
     render: function(){
         var myStyle = {
-            fontSize: 30
+            fontSize: 30,
+            cursor: "pointer"
         };
         return (
             <div className="go-top">

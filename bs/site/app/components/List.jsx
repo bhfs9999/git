@@ -22,7 +22,7 @@ var List = React.createClass({
     },
     fetchNews: function() {
         var url = '/api/getlist?cate=' + this.props.catemap[this.state.cate] + '&' + new Date()
-        fetch(url,{
+        fetch(url, {
                 method: 'GET', 
                 redirect: 'follow',
                 headers: new Headers({

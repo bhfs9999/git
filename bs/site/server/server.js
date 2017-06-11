@@ -4,6 +4,10 @@ var fs=require('fs');
 var file="./news.json";
 var newsdata=JSON.parse(fs.readFileSync(file));
 var mysql      = require('mysql');
+var bodyParser = require('body-parser');
+ 
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 
 var connection = mysql.createConnection({
     host     : 'localhost',
@@ -14,19 +18,21 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-function fetchDataFromDb(callback, sql) {
+function operateDb(callback, sql) {
     var response;
     connection.query(sql, function (err, result) {
         if(err) {
             console.log('[SELECT ERROR] - ', err.message);
-            return;
+            callback(err, result);
         }
-        callback(null, result);
+        else{
+            callback(null, result);
+        }
     });
 }
 
 function fetchNews(callback, sql) {
-    fetchDataFromDb(function(err, result) {
+    operateDb(function(err, result) {
         if(err) throw err;
 
         var newslist = new Array();
@@ -55,7 +61,7 @@ function fetchNews(callback, sql) {
 }
 
 function fetchCount(callback, sql) {
-    fetchDataFromDb(function(err, result) {
+    operateDb(function(err, result) {
         if(err) throw err;
 
         var countlist = new Object();
@@ -68,10 +74,11 @@ function fetchCount(callback, sql) {
 }
 
 app.get('/api/getlist', function (req, res) {
+    console.log("\n---------------主页Fetch请求: getlist " + cate);
+
     var cate = req.query.cate;
     var sql = "select * from news where cate='" + cate + "'";
 
-    console.log("---------------主页ajax请求: getlist " + cate);
     res.writeHead(200, {'Content-Type': 'application/json'});
 
     fetchNews(function(err, result) {
@@ -81,10 +88,10 @@ app.get('/api/getlist', function (req, res) {
 })
 
 app.get('/api/getdetail', function (req, res) {
+    console.log("\n---------------主页Fetch请求: getdetail " + newsid);
+    
     var newsid = req.query.newsid;
     var sql = "select * from news where idnews='" + newsid + "'";
-
-    console.log("---------------主页ajax请求: getdetail " + newsid);
 
     res.writeHead(200, {'Content-Type': 'application/json'});
 
@@ -95,9 +102,9 @@ app.get('/api/getdetail', function (req, res) {
 })
 
 app.get('/api/getcount', function (req, res) {
-    var sql = "SELECT cate, count(*) as counts FROM news_site.news group by cate;";
-
-    console.log("---------------主页ajax请求: getcount ");
+    console.log("\n---------------主页Fetch请求: getcount ");
+    
+    var sql = "SELECT cate, count(*) as counts FROM news_site.news group by cate;";    
 
     res.writeHead(200, {'Content-Type': 'application/json'});
 
@@ -107,40 +114,72 @@ app.get('/api/getcount', function (req, res) {
     }, sql);
 })
 
-app.get('/', function (req, res) {
-   console.log("主页 GET 请求");
-   res.send('Hello GET');
-})
- 
- 
-//  POST 请求
-app.post('/', function (req, res) {
-   console.log("主页 POST 请求");
-   res.send('Hello POST');
+app.post('/api/create_account', urlencodedParser, function (req, res) {
+    console.log("\n---------------主页Fetch请求: create_account ");
+
+    var email = req.body.email;
+    var username = req.body.username;
+    var password = req.body.password;
+    var sql = "insert into news_site.account (user_name, email, password) values('" + username + "','" +  email + "','" + password + "');"
+    
+    operateDb(function (err, result) {
+        if(err) {
+            console.log('insert failed');
+            res.end("failed");
+        }
+        else{
+            console.log('insert success');
+            res.end("success");
+        }
+    }, sql);
+
+    
 })
 
-app.post('/api', function (req, res) {
-   console.log("主页 POST 请求");
-   res.send('Hello POST');
+app.post('/api/check_email', urlencodedParser, function (req, res) {
+    console.log("\n---------------主页Fetch请求: check_email ");
+
+    var email = req.body.email;
+    var sql = "SELECT * FROM news_site.account where email = '" + email +"';"
+    
+    operateDb(function (err, result) {
+        if(err) {
+            console.log('query failed');
+        }
+        else if(result.length==0){
+            console.log('email can use');
+            res.end("ok");
+        }
+        else{
+            console.log('email cannot use');
+            res.end("no");
+        }
+    }, sql);
+    
 })
- 
-//  /del_user 页面响应
-app.get('/api/del_user', function (req, res) {
-   console.log("/del_user 响应 DELETE 请求");
-   res.send('删除页面');
+
+app.post('/api/check_username', urlencodedParser, function (req, res) {
+    console.log("\n---------------主页Fetch请求: check_username ");
+
+    var username = req.body.username;
+    var sql = "SELECT * FROM news_site.account where user_name = '" + username +"';"
+    
+    operateDb(function (err, result) {
+        if(err) {
+            console.log('query failed');
+        }
+        else if(result.length==0){
+            console.log('username can use');
+            res.end("ok");
+        }
+        else{
+            console.log('username cannot use');
+            res.end("no");
+        }
+    }, sql);
+
 })
- 
-//  /list_user 页面 GET 请求
-app.get('/list_user', function (req, res) {
-   console.log("/list_user GET 请求");
-   res.send('用户列表页面');
-})
- 
-// 对页面 abcd, abxcd, ab123cd, 等响应 GET 请求
-app.get('/ab*cd', function(req, res) {   
-   console.log("/ab*cd GET 请求");
-   res.send('正则匹配');
-})
+
 var server = app.listen(4001, function () {
     var host = server.address().address
     var port = server.address().port
