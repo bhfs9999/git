@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "body-parser": "^1.17.2"
+    "body-parser": "^1.17.2",
+    "crypto": "0.0.3"
   }
 }

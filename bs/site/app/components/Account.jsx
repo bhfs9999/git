@@ -1,4 +1,5 @@
 var React = require('react');
+var crypto = require('crypto');
 
 var Account = React.createClass({
     getInitialState: function() {
@@ -34,7 +35,8 @@ var Account = React.createClass({
             $('.login_error').html("");
             $('.login_error').removeClass('alert alert-danger');
 
-            var postdata = "username=" + this.state.loginUsername + "&password=" + this.state.loginPassword;
+            var encryptpwd = this.encrypt(this.state.loginPassword);
+            var postdata = "username=" + this.state.loginUsername + "&password=" + encryptpwd;
             var url = 'api/login';
             fetch(url, {
                 method: 'POST',
@@ -230,7 +232,8 @@ var Account = React.createClass({
             $('.sign_error').html("");
             $('.sign_error').removeClass('alert alert-danger');
 
-            var postdata = "email=" + this.state.signUpEmail + "&username=" + this.state.signUpUsername + "&password=" + this.state.signUpPassword;
+            var encryptpwd = this.encrypt(this.state.signUpPassword);
+            var postdata = "email=" + this.state.signUpEmail + "&username=" + this.state.signUpUsername + "&password=" + encryptpwd;
             var url = 'api/create_account';
             fetch(url, {
                 method: 'POST',
@@ -298,6 +301,13 @@ var Account = React.createClass({
         });
     },
 
+    encrypt: function (pwd) {
+        var hasher = crypto.createHash("sha1");
+        hasher.update(pwd);
+        var result = hasher.digest("hex");
+        return result;
+    },
+
     render: function () {
         var displayStyle = {
             display: "none",
@@ -311,6 +321,7 @@ var Account = React.createClass({
         var signUpMessageHeaderStyle = {
             height : 50,
         };
+
         return (
 
             <div className="container">

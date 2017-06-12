@@ -63,16 +63,20 @@ var Nav = React.createClass({
     render: function(){
 
         var loginStyle = {
-            marginRight: 15,
+            marginRight: 30,
+            textAlign: "right",
         };
-
         var signInStyle = {
-            marginRight: 40,
+            marginRight: 30,
+            textAlign: "right",
         };
-
         var brandStyle = {
             fontSize: 20,
         };
+        var navButtonStyle = {
+            textAlign: "right",
+        };
+
         return (
             <div>
                 <nav className="navbar navbar-default navbar-fixed-top">
@@ -93,12 +97,12 @@ var Nav = React.createClass({
                         {
                             this.state.isLogin ?
                             <ul className="nav navbar-nav navbar-right">
-                                <li><a>欢迎</a></li>
-                                <li className="dropdown">
+                                <li style={navButtonStyle} ><a>欢迎</a></li>
+                                <li className="dropdown" style={navButtonStyle} >
                                     <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.state.username} <span className="caret"></span></a>
                                     <ul className="dropdown-menu">
-                                        <li><a href="javascript:void(0)" >设置个人信息</a></li>
-                                        <li><a href="javascript:void(0)" onClick={this.logout} >退出登录</a></li>
+                                        <li style={navButtonStyle} ><a href="javascript:void(0)" >设置个人信息</a></li>
+                                        <li style={navButtonStyle} ><a href="javascript:void(0)" onClick={this.logout} >退出登录</a></li>
                                     </ul>
                                 </li>
                             </ul>
