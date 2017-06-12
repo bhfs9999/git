@@ -11,21 +11,31 @@ var Account = React.createClass({
             signUpConfirmPassword: ""
         }
     },
-    loginSubmit: function () {
+
+    getUsername: function(event) {
+        this.setState({
+            loginUsername: event.target.value
+        })
     },
 
-    signUpSubmit: function () {
-        if(this.state.signUpEmail=="" || this.state.signUpUsername=="" ||this.state.signUpPassword=="" ||this.state.signUpConfirmPassword=="") {
-            $('.sign_error').html("请填写正确信息");
-            $('.sign_error').addClass('alert alert-danger');
+    getPassword: function(event) {
+        this.setState({
+            loginPassword: event.target.value
+        })
+    },
+
+    loginSubmit: function () {
+        if(this.state.loginUsername=="" || this.state.loginPassword=="") {
+            $('.login_error').html("请输入用户名和密码");
+            $('.login_error').addClass('alert alert-danger');
             this.shakeModal();
         }
         else {
-            $('.sign_error').html("");
-            $('.sign_error').removeClass('alert alert-danger');
+            $('.login_error').html("");
+            $('.login_error').removeClass('alert alert-danger');
 
-            var postdata = "email=" + this.state.signUpEmail + "&username=" + this.state.signUpUsername + "&password=" + this.state.signUpPassword;
-            var url = 'api/create_account';
+            var postdata = "username=" + this.state.loginUsername + "&password=" + this.state.loginPassword;
+            var url = 'api/login';
             fetch(url, {
                 method: 'POST',
                 redirect: 'follow',
@@ -38,28 +48,33 @@ var Account = React.createClass({
                 return response.text();
             })
             .then((data) => {
-                if(data=="success") {
-                    alert("创建成功")
+                if(data=="ok") {
+                    this.props.handleLogin(this.state.loginUsername);
+                    $('#loginModal').modal('hide');
+                }
+                else if(data=="wrongpwd"){
+                    $('.login_error').html("密码错误");
+                    $('.login_error').addClass('alert alert-danger');
+                    this.shakeModal();
+                }
+                else if(data=="nousername") {
+                    $('.login_error').html("该用户名不存在");
+                    $('.login_error').addClass('alert alert-danger');
+                    this.shakeModal();
                 }
                 else {
-                    alert("创建失败")
+                    $('.login_error').html("服务器异常");
+                    $('.login_error').addClass('alert alert-danger');
+                    console.log(data);
                 }
             })
             .catch((err) => {
                 console.log(err);
             });
-
         }
     },
 
-    shakeModal: function () {
-        $('#loginModal .modal-dialog').addClass('shake');
-        $('.error').addClass('alert alert-danger').html("Invalid email/password combination");
-        $('input[type="password"]').val('');
-        setTimeout(function () {
-            $('#loginModal .modal-dialog').removeClass('shake');
-        }, 1000);
-    },
+
 
     verifyEmail: function (event) {
         var reg=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((.[a-zA-Z0-9_-]{2,3}){1,2})$/;
@@ -87,8 +102,12 @@ var Account = React.createClass({
                         $('.sign_email_error').html("");
                         $('.sign_email_error').removeClass('alert alert-danger');
                     }
-                    else {
+                    else if(data=="no") {
                         $('.sign_email_error').html("该邮箱已被注册");
+                        $('.sign_email_error').addClass('alert alert-danger');
+                    }
+                    else {
+                        $('.sign_email_error').html("服务器异常");
                         $('.sign_email_error').addClass('alert alert-danger');
                     }
                 })
@@ -112,7 +131,7 @@ var Account = React.createClass({
     },
  
     verifyUsername: function (event) {
-        var reg =  /^(?=.*\d)[a-z\d]{4,15}$/i;
+        var reg =  /[a-zA-Z0-9]{4,15}$/i;
 
         if(reg.test(event.target.value) || event.target.value=="") {
             $('.sign_username_error').html("");
@@ -137,9 +156,13 @@ var Account = React.createClass({
                         $('.sign_username_error').html("");
                         $('.sign_username_error').removeClass('alert alert-danger');
                     }
-                    else {
+                    else if(data=="no") {
                         $('.sign_username_error').html("该用户名已被注册");
                         $('.sign_username_error').addClass('alert alert-danger');
+                    }
+                    else {
+                        $('.sign_email_error').html("服务器异常");
+                        $('.sign_email_error').addClass('alert alert-danger');
                     }
                 })
                 .catch((err) => {
@@ -161,7 +184,7 @@ var Account = React.createClass({
     },
 
     verifyPassword: function (event) {
-        var reg =  /^(?=.*\d)[a-z\d]{4,20}$/i;
+        var reg =  /[a-zA-Z0-9]{4,20}$/i;
 
         if(reg.test(event.target.value) || event.target.value=="") {
             $('.sign_password_error').html("");
@@ -197,8 +220,67 @@ var Account = React.createClass({
         }
     },
 
+    signUpSubmit: function () {
+        if(this.state.signUpEmail=="" || this.state.signUpUsername=="" ||this.state.signUpPassword=="" ||this.state.signUpConfirmPassword=="") {
+            $('.sign_error').html("请填写正确信息");
+            $('.sign_error').addClass('alert alert-danger');
+            this.shakeModal();
+        }
+        else {
+            $('.sign_error').html("");
+            $('.sign_error').removeClass('alert alert-danger');
+
+            var postdata = "email=" + this.state.signUpEmail + "&username=" + this.state.signUpUsername + "&password=" + this.state.signUpPassword;
+            var url = 'api/create_account';
+            fetch(url, {
+                method: 'POST',
+                redirect: 'follow',
+                headers: new Headers({
+                    'Content-Type': "application/x-www-form-urlencoded"
+                }),
+                body: postdata
+            })
+            .then((response) => {
+                return response.text();
+            })
+            .then((data) => {
+                if(data=="success") {
+                    $('#signUpMessage').html("注册成功")
+                }
+                else {
+                    $('#signUpMessage').html("服务器异常")
+                }
+                $('#signUpMessageModal').modal('show');
+                $('#loginModal').modal('hide');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        }
+    },
+
+    signUpFinish: function() {
+        this.props.handleLogin(this.state.signUpUsername);
+    },
+
+
+
+    shakeModal: function () {
+        $('#loginModal .modal-dialog').addClass('shake');
+        $('.error').addClass('alert alert-danger').html("Invalid email/password combination");
+        $('input[type="password"]').val('');
+        setTimeout(function () {
+            $('#loginModal .modal-dialog').removeClass('shake');
+        }, 1000);
+    },
+
     componentDidMount: function() {
         $('#loginModal').on('hide.bs.modal', function() {
+            $('.login_error').html("");
+            $('.login_error').removeClass('alert alert-danger');
+            $('.sign_error').html("");
+            $('.sign_error').removeClass('alert alert-danger');
             $("#sign_email").val("");
             $("#sign_username").val("");
             $("#sign_password").val("");
@@ -219,6 +301,15 @@ var Account = React.createClass({
     render: function () {
         var displayStyle = {
             display: "none",
+        };
+        var signUpMessageFooterStyle = {
+            textAlign : "center",
+        };
+        var signUpMessageStyle = {
+            width : 400,
+        };
+        var signUpMessageHeaderStyle = {
+            height : 50,
         };
         return (
 
@@ -258,8 +349,8 @@ var Account = React.createClass({
 
                                         <div className="form loginBox">
                                             <form method="post" action="/login" accept-charset="UTF-8">
-                                                <input id="login_email" className="form-control" type="text" placeholder="Email" name="email" />
-                                                <input id="login_password" className="form-control" type="password" placeholder="Password" name="password" />
+                                                <input id="login_email" className="form-control" type="text" placeholder="用户名" name="email" onBlur={this.getUsername} />
+                                                <input id="login_password" className="form-control" type="password" placeholder="密码" name="password" onBlur={this.getPassword} />
                                                 <input className="btn btn-default btn-login" type="button" value="登录" onClick={this.loginSubmit} />
                                             </form>
                                         </div>
@@ -300,6 +391,21 @@ var Account = React.createClass({
                         </div>
                     </div>
                 </div>
+
+                <div className="modal fade" id="signUpMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div className="modal-dialog" style={signUpMessageStyle}>
+                        <div className="modal-content">
+                            <div className="modal-header" style={signUpMessageHeaderStyle}>
+                                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 className="modal-title" id="signUpMessage"></h4>
+                            </div>
+                            <div className="modal-footer" style={signUpMessageFooterStyle}>
+                                <button type="button" className="btn btn-default" onClick={this.signUpFinish} data-dismiss="modal">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         );
     }

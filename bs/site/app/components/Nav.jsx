@@ -2,6 +2,19 @@ var React = require('react');
 var AppAccount = require('./Account.jsx');
 
 var Nav = React.createClass({
+    getInitialState: function() {
+        return {
+            isLogin: false,
+            username: ""
+        }
+    },
+
+    handleLogin: function(username) {
+        this.setState({
+            isLogin: true,
+            username: username
+        })
+    },
 
     showLoginForm: function() {
         $('#loginModal .registerBox').fadeOut('fast',function(){
@@ -14,12 +27,14 @@ var Nav = React.createClass({
         });       
         $('.error').removeClass('alert alert-danger').html(''); 
     },
+
     openLoginModal: function() {
         this.showLoginForm();
         setTimeout(function(){
             $('#loginModal').modal('show');    
         }, 230);
     },
+
     showRegisterForm: function() {
         $('.loginBox').fadeOut('fast',function(){
             $('.registerBox').fadeIn('fast');
@@ -30,11 +45,19 @@ var Nav = React.createClass({
         }); 
         $('.error').removeClass('alert alert-danger').html('');
     },
+
     openRegisterModal: function() {
         this.showRegisterForm();
         setTimeout(function(){
             $('#loginModal').modal('show');    
         }, 230);
+    },
+
+    logout: function() {
+        this.setState({
+            isLogin: false,
+            username: ""
+        })
     },
 
     render: function(){
@@ -67,6 +90,19 @@ var Nav = React.createClass({
                         </div>
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
+                        {
+                            this.state.isLogin ?
+                            <ul className="nav navbar-nav navbar-right">
+                                <li><a>欢迎</a></li>
+                                <li className="dropdown">
+                                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.state.username} <span className="caret"></span></a>
+                                    <ul className="dropdown-menu">
+                                        <li><a href="javascript:void(0)" >设置个人信息</a></li>
+                                        <li><a href="javascript:void(0)" onClick={this.logout} >退出登录</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            :
                             <ul className="nav navbar-nav navbar-right">
                                 <li style={loginStyle}>
                                     <button className="btn btn-default navbar-btn my-btn" data-toggle="modal" onClick={this.openLoginModal}>登录</button>
@@ -75,12 +111,13 @@ var Nav = React.createClass({
                                     <button className="btn btn-default navbar-btn my-btn" data-toggle="modal" onClick={this.openRegisterModal}>注册</button>
                                 </li>
                             </ul>
+                        }
                             
                         </div>
                     </div>
                     
                 </nav>
-                <AppAccount showLoginForm={this.showLoginForm} showRegisterForm={this.showRegisterForm}/>
+                <AppAccount showLoginForm={this.showLoginForm} showRegisterForm={this.showRegisterForm} handleLogin={this.handleLogin} />
             </div>
         );
     }

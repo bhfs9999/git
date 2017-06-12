@@ -114,6 +114,38 @@ app.get('/api/getcount', function (req, res) {
     }, sql);
 })
 
+app.post('/api/login', urlencodedParser, function (req, res) {
+    console.log("\n---------------主页Fetch请求: login ");
+
+    var username = req.body.username;
+    var password = req.body.password;
+    var sql = "SELECT * FROM news_site.account where user_name='" + username + "';"
+    
+    operateDb(function (err, result) {
+        if(err) {
+            console.log('query failed');
+            res.end("failed");
+        }
+        else if(result.length==0){
+            console.log('no such username');
+            res.end("nousername");
+        }
+        else{
+            var rightpwd = result[0].password;
+            if(rightpwd == password) {
+                console.log('right password');
+                res.end("ok");
+            }
+            else {
+                console.log('wrong password');
+                res.end("wrongpwd");
+            }
+            
+        }
+    }, sql);
+
+})
+
 app.post('/api/create_account', urlencodedParser, function (req, res) {
     console.log("\n---------------主页Fetch请求: create_account ");
 
@@ -145,6 +177,7 @@ app.post('/api/check_email', urlencodedParser, function (req, res) {
     operateDb(function (err, result) {
         if(err) {
             console.log('query failed');
+            res.end("failed");
         }
         else if(result.length==0){
             console.log('email can use');
@@ -167,6 +200,7 @@ app.post('/api/check_username', urlencodedParser, function (req, res) {
     operateDb(function (err, result) {
         if(err) {
             console.log('query failed');
+            res.end("failed");
         }
         else if(result.length==0){
             console.log('username can use');

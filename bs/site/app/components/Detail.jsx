@@ -32,6 +32,7 @@ var Detail = React.createClass({
                 });
             })
             .catch((err) => {
+                console.log("服务器错误")；
                 console.log(err);
             });
     },    
